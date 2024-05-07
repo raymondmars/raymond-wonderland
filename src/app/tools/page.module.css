@@ -1,0 +1,25 @@
+.tools {
+  font-size: 1rem;
+  padding: 20px;
+}
+
+.tools ul {
+  list-style-type: disc;
+  /* padding: 10; */
+}
+
+.tools li {
+  padding: 8px 10px;
+}
+
+.tools li ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tools li ul li:first-child {
+  padding-left: 0;
+}

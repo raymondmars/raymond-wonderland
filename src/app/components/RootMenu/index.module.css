@@ -1,0 +1,27 @@
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menu li {
+  padding: 10px;
+}
+
+.menu li a:hover {
+  color: rgb(57, 66, 239);
+}
+
+.menu li.active a {
+  color: rgb(57, 66, 239);
+}
+
+.menu li:first-child {
+  padding-left: 0;
+}
+
+.menu li a {
+  font-size: 1em;
+}

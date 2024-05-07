@@ -1,0 +1,33 @@
+.timer {
+  padding: 2px;
+}
+
+.timer ul {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  list-style: none;
+  padding: 0;
+}
+
+.timer ul li > button {
+  padding: 2px 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.timer ul li {
+  padding: 2px 8px;
+}
+
+.timer ul li:last-child {
+  padding: 2px 0px 2px 8px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;  */
+}
