@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Open_Sans} from "next/font/google";
+// import { Open_Sans} from "next/font/google";
 import "./globals.css";
 import RootMenu from "./components/RootMenu";
 
-const bod = Open_Sans({ subsets: ["latin"], weight: '400' });
+// const bod = Open_Sans({ subsets: ["latin"], weight: '400' });
 
 export const metadata: Metadata = {
   title: "Raymond's Wonderland",
@@ -15,7 +15,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   const homeMenuItems = [
     { title: "Index", link: "/" },
     { title: "Insights", link: "/insights" },
@@ -24,7 +24,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={bod.className}>
+      <body className="rootBody">
         <h1 className="title">Raymond's Wonderland</h1>
         <RootMenu menuItems={homeMenuItems} />
         <div className="maincontainer">

@@ -9,10 +9,10 @@ export default function Page() {
         <li>
           IELTS
           <ul>
-            <li>Listening</li>
-            <li>Reading</li>
+            <li><a href='/tools/ielts/score'>Writing AI examiner scoring</a></li>
+            {/* <li>Reading</li>
             <li><a href='/tools/ielts/writing'>Writing</a></li>
-            <li>Speaking</li>
+            <li>Speaking</li> */}
           </ul>
         </li>
         <li>Encode/Decode
