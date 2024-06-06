@@ -9,15 +9,17 @@
 }
 
 .tools li {
-  padding: 8px 10px;
+  padding: 8px 5px;
 }
 
-.tools li ul {
-  list-style-type: none;
+.tools li ol {
   margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
+  padding: 0px 10px;
+}
+
+.tools li ol li {
+  list-style-type: circle;
+  padding: 8px 5px;
 }
 
 .tools li ul li:first-child {

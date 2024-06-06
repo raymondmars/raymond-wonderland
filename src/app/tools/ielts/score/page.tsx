@@ -1,24 +1,39 @@
 'use client'
 
-import { use, useEffect, useState } from "react";
-import styles from "./page.module.css";
+import { useEffect, useState } from "react"
+
+import styles from "./page.module.css"
+import { scoreWritingWithStream } from "@/app/apis/ielts"
 
 export default function Page() {
   const MAX_IMAGE_SIZE = 400 // KB
-  const MAX_WORDS = 500 
+  const MAX_WORDS = 500
   const [essayType, setEssayType] = useState(1)
+  const [essayTopic, setEssayTopic] = useState<string>('')
   const [task1Image, setTask1Image] = useState<string>('')
   const [contents, setContents] = useState<string>('')
 
+  const [imageFileKey, setImageFileKey] = useState<string>(Date.now().toString())
+
   const [disableScoreButton, setDisableScoreButton] = useState<boolean>(true)
   const [imageSizeError, setImageSizeError] = useState<boolean>(false)
-
   const [wordCount, setWordCount] = useState<number>(0)
+  const [scoreRespone, setScoreRespone] = useState<string>('')
 
   useEffect(() => {
     checkScoreButton()
-  }, [essayType, task1Image, contents])
+  }, [essayType, essayTopic, task1Image, contents])
 
+  const clearForm = () => {
+    setEssayType(1)
+    setEssayTopic('')
+    setTask1Image('')
+    setContents('')
+    setWordCount(0)
+    setDisableScoreButton(true)
+    setImageSizeError(false)
+    setImageFileKey(Date.now().toString())
+  }
 
   const handleEssayTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setEssayType(parseInt(event.target.value))
@@ -61,10 +76,9 @@ export default function Page() {
   }
 
   const shouldDisableScoreButton = () => {
-    // console.log(essayType, task1Image, contents)
-    if (essayType === 1 && task1Image !== '' && contents !== '') {
+    if (essayType === 1 && essayTopic.trim() !== '' && task1Image !== '' && contents.trim() !== '') {
       return false
-    } else if (essayType === 2 && contents !== '') {
+    } else if (essayType === 2 && essayTopic.trim() !== '' && contents !== '') {
       return false
     } else {
       return true
@@ -89,13 +103,24 @@ export default function Page() {
     if(shouldDisableScoreButton()) {
       return
     }
-    if(contents.trim().length > MAX_WORDS) {
+    if(wordCount > MAX_WORDS) {
       alert(`Only accept a maximum of ${MAX_WORDS} words, please check it again.`)
       return
     }
-    console.log('start to score')
-  }
 
+    setDisableScoreButton(true)
+    setScoreRespone('Wait for scoring...')
+    let wholeContents = ''
+    scoreWritingWithStream({essayType, topic: essayTopic,  contents, task1Image, onData: (data) => {
+      if(data.indexOf('\n') >= 0) {
+        data = data.replace(/\n/g, '<br/>')
+      }
+      wholeContents = wholeContents + data
+      setScoreRespone(wholeContents)
+    }, onEnd: () => {
+      clearForm()
+    }})
+  }
 
   return (
     <div className={styles.ieltsWritingScore}>
@@ -105,10 +130,16 @@ export default function Page() {
         <div className={styles.row}>
           <div className={styles.label}>Essay Type</div>
           <div className={styles.control}>
-            <select onChange={handleEssayTypeChange}>
+            <select onChange={handleEssayTypeChange} value={essayType}>
               <option value="1">Task 1</option>
               <option value="2">Task 2</option>
             </select>
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.label}>Essay Topic</div>
+          <div className={styles.control}>
+            <textarea className={styles.topic} onChange={(e) => setEssayTopic(e.target.value)} value={essayTopic}></textarea>
           </div>
         </div>
         {
@@ -116,7 +147,7 @@ export default function Page() {
             <div className={styles.row}>
               <div className={styles.label}>Task 1 Image</div>
               <div className={styles.control}>
-                <input type="file" accept="image/*" onChange={handleFileUpload}/>
+                <input type="file" accept="image/*" onChange={handleFileUpload} key={imageFileKey} />
                 {imageReminder()}
 
                 { task1Image !== '' &&  <div className={styles.images}><img src={task1Image} alt="Task 1" onError={handleImageChange} onLoad={handleImageChange} /></div> }
@@ -128,11 +159,12 @@ export default function Page() {
           <div className={styles.label}>Contents</div>
           <div className={styles.control}>
             <label className={styles.wordCount}>Word count: {wordCount}</label>
-            <textarea 
-              onChange={handleContentsChange} 
-              onBlur={() => checkScoreButton()} 
+            <textarea
+              onChange={handleContentsChange}
+              onBlur={() => checkScoreButton()}
               onInput={handleInput}
-              maxLength={MAX_WORDS}
+              className={styles.essayContents}
+              value={contents}
             ></textarea>
             <label>Only accept a maximum of {MAX_WORDS} words.</label>
           </div>
@@ -144,6 +176,10 @@ export default function Page() {
           </div>
         </div>
       </form>
+      { scoreRespone !== '' && <div className={styles.scoreResult}>
+        <label>Score result:</label>
+        <div className={styles.innerContent} dangerouslySetInnerHTML={{ __html: scoreRespone }}></div>
+      </div>}
       </div>
     </div>
   )

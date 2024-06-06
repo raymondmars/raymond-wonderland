@@ -8,18 +8,25 @@ export default function Page() {
       <ul>
         <li>
           IELTS
-          <ul>
+          <ol>
             <li><a href='/tools/ielts/score'>Writing AI examiner scoring</a></li>
             {/* <li>Reading</li>
             <li><a href='/tools/ielts/writing'>Writing</a></li>
             <li>Speaking</li> */}
-          </ul>
+          </ol>
+        </li>
+        <li>
+          Credit Card
+          <ol>
+            <li>Validator</li>
+            <li><a href='/tools/creditcard/fakenumber'>Fake Number</a></li>
+          </ol>
         </li>
         <li>Encode/Decode
-          <ul>
+          <ol>
             <li>Base64</li>
             <li>URL</li>
-          </ul>
+          </ol>
         </li>
         <li>Timer</li>
       </ul>

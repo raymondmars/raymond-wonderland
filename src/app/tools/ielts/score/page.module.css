@@ -1,5 +1,6 @@
 .ieltsWritingScore {
   padding: 20px 0px;
+  font-size: 16px;
 }
 .ieltsWritingScore form {
   padding: 20px 0px;
@@ -21,7 +22,13 @@
   padding: 6px;
 }
 
-.ieltsWritingScore .row  .control textarea {
+.ieltsWritingScore .row  .control textarea.topic {
+  width: 800px;
+  padding: 5px;
+  height: 80px;
+}
+
+.ieltsWritingScore .row  .control textarea.essayContents {
   width: 800px;
   padding: 5px;
   height: 310px;
@@ -74,4 +81,20 @@
   text-align: right;
   padding: 4px 2px;
   margin-top: 0px !important;
+}
+
+.ieltsWritingScore .scoreResult {
+  padding: 10px 0px;
+}
+
+.ieltsWritingScore .scoreResult label {
+  font-weight: 700;
+}
+
+.ieltsWritingScore .scoreResult .innerContent {
+  margin-top: 10px;
+  padding: 15px;
+  border: dotted 3px grey;
+  font-size: 18px;
+  /* background-color:beige; */
 }
