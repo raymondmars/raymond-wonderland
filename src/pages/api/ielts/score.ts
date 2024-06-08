@@ -6,12 +6,21 @@ import OpenAI from 'openai'
 import { EssayType, IELTSScoreData, buildPromptMessage } from '../../../services/scoreService'
 
 
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error('Missing OPENAI_API_KEY')
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
+if(process.env.OPENAI_PROXY_URL) {
+  openai.baseURL = process.env.OPENAI_PROXY_URL
+}
+
+
 const validationAuth = (req: NextApiRequest) => {
-  console.log(req.headers)
+  // console.log(req.headers)
   // if(req.headers.authorization !== process.env.AUTHORIZATION) {
   //   return false
   // }
@@ -60,7 +69,7 @@ export default async function handler(
     const stream = await openai.chat.completions.create({
       model: 'gpt-4-vision-preview',
       messages: examinerPrompt, //[{role: 'user', content: 'give me a react component sample.'}],
-      temperature: 0.7,
+      temperature: 0.8,
       stream: true,
     });
 

@@ -19,7 +19,7 @@ export default function RootMenu({menuItems}: {menuItems: MenuItem[]}) {
       <ul className={styles.menu}>
         {
           menuItems.map((item, index) => {
-            if(item.link === urlPath || (item.link !== '/' && urlPath.startsWith(item.link))) {
+            if(item.link === urlPath || (item.link !== '/' && urlPath?.startsWith(item.link))) {
               return <li key={index} className={styles.active}><a href={item.link}>{item.title}</a></li>
             }
             
