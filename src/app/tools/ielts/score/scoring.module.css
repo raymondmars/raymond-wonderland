@@ -12,35 +12,37 @@
   padding: 12px 0px;
 }
 
-.ieltsWritingScore .row  .label {
-  margin-right: 10px;
-  width: 100px;
+.ieltsWritingScore .row .control {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .ieltsWritingScore .row  .control select {
-  width: 240px;
   padding: 6px;
+  height: 40px;
+  border: 1px solid gray;
 }
 
+
 .ieltsWritingScore .row  .control textarea.topic {
-  width: 800px;
   padding: 5px;
   height: 80px;
+  border: solid 1px grey;
 }
 
 .ieltsWritingScore .row  .control textarea.essayContents {
-  width: 800px;
   padding: 5px;
   height: 310px;
   border: solid 1px grey;
 }
 
-.ieltsWritingScore .row .control {
-  display: flex;
-  flex-direction: column;
+.ieltsWritingScore .row .control .label {
+  padding: 10px 0px;
+  font-weight: 550;
 }
 
-.ieltsWritingScore .row .control label {
+.ieltsWritingScore .row .control .desc {
   margin-top: 8px;
 }
 
@@ -59,18 +61,10 @@
 
 
 .ieltsWritingScore .row .control button {
-  /* margin-top: 8px; */
-  padding: 8px 12px;
-  /* background-color: #373838;
-  color: white; */
-  /* border: none; */
+  padding: 10px 12px;
   cursor: pointer;
-  /* border-radius: 10px; */
 }
 
-/* .ieltsWritingScore .row .control button:hover {
-
-} */
 
 .ieltsWritingScore .error {
   color: red;
@@ -84,17 +78,27 @@
 }
 
 .ieltsWritingScore .scoreResult {
-  padding: 10px 0px;
+  padding: 15px;
+  border: dotted 3px grey;
 }
 
 .ieltsWritingScore .scoreResult label {
   font-weight: 700;
 }
 
-.ieltsWritingScore .scoreResult .innerContent {
-  margin-top: 10px;
-  padding: 15px;
-  border: dotted 3px grey;
+.ieltsWritingScore .scoreResult .resultImage img {
+  padding: 5px 0px;
+  width: 100%;
+}
+
+.ieltsWritingScore .scoreResult .answerContents {
+  color: grey;
+  /* font-style: italic; */
+  padding: 15px 0px;
   font-size: 18px;
-  /* background-color:beige; */
+}
+
+.ieltsWritingScore .scoreResult .innerContent {
+  padding: 15px 0px;
+  font-size: 18px;
 }

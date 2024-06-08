@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import styles from "./scoring.module.css"
 import { scoreWritingWithStream } from "@/app/apis/ielts"
@@ -19,10 +19,24 @@ export default function Scoring() {
   const [imageSizeError, setImageSizeError] = useState<boolean>(false)
   const [wordCount, setWordCount] = useState<number>(0)
   const [scoreRespone, setScoreRespone] = useState<string>('')
+
+  const [resultTopic, setResultTopic] = useState<string>('')
+  const [resultContents, setResultContents] = useState<string>('')
+  const [resultImage, setResultImage] = useState<string>('')
+
+  const endOfMessagesRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     checkScoreButton()
   }, [essayType, essayTopic, task1Image, contents])
+
+  const scrollToBottom = () => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [scoreRespone])
 
   const clearForm = () => {
     setEssayType(1)
@@ -59,7 +73,7 @@ export default function Scoring() {
         setImageSizeError(false)
         const reader = new FileReader()
         reader.onload = (e) => {
-          console.log(e.target?.result as string)
+          // console.log(e.target?.result as string)
           setTask1Image(e.target?.result as string)
         }
         reader.readAsDataURL(file)
@@ -110,14 +124,26 @@ export default function Scoring() {
 
     setDisableScoreButton(true)
     setScoreRespone('Wait for scoring...')
+
+    setResultTopic(essayTopic)
+    setResultContents(contents)
+    setResultImage(task1Image)
+
+    scrollToBottom()
+    const strongPattern = /\*\*(.*?)\*\*/g
     let wholeContents = ''
     scoreWritingWithStream({essayType, topic: essayTopic,  contents, task1Image, onData: (data) => {
       if(data.indexOf('\n') >= 0) {
         data = data.replace(/\n/g, '<br/>')
       }
       wholeContents = wholeContents + data
+      if(strongPattern.test(wholeContents)) {
+        wholeContents = wholeContents.replace(strongPattern, '<strong>$1</strong>')
+      }
       setScoreRespone(wholeContents)
     }, onEnd: () => {
+      wholeContents = wholeContents + ' ✓ '
+      setScoreRespone(wholeContents)
       clearForm()
     }})
   }
@@ -128,8 +154,8 @@ export default function Scoring() {
       <div>
       <form>
         <div className={styles.row}>
-          <div className={styles.label}>Essay Type</div>
           <div className={styles.control}>
+            <div className={styles.label}>Essay Type</div>
             <select onChange={handleEssayTypeChange} value={essayType}>
               <option value="1">Task 1</option>
               <option value="2">Task 2</option>
@@ -137,18 +163,18 @@ export default function Scoring() {
           </div>
         </div>
         <div className={styles.row}>
-          <div className={styles.label}>Essay Topic</div>
           <div className={styles.control}>
+            <div className={styles.label}>Essay Topic</div>
             <textarea className={styles.topic} onChange={(e) => setEssayTopic(e.target.value)} value={essayTopic}></textarea>
           </div>
         </div>
         {
           essayType === 1 && (
             <div className={styles.row}>
-              <div className={styles.label}>Task 1 Image</div>
               <div className={styles.control}>
+                <div className={styles.label}>Task 1 Image</div>
                 <input type="file" accept="image/*" onChange={handleFileUpload} key={imageFileKey} />
-                {imageReminder()}
+                <label className={styles.desc}>{imageReminder()}</label>
 
                 { task1Image !== '' &&  <div className={styles.images}><img src={task1Image} alt="Task 1" onError={handleImageChange} onLoad={handleImageChange} /></div> }
               </div>
@@ -156,8 +182,8 @@ export default function Scoring() {
           )
         }
         <div className={styles.row}>
-          <div className={styles.label}>Contents</div>
           <div className={styles.control}>
+            <div className={styles.label}>Contents</div>
             <label className={styles.wordCount}>Word count: {wordCount}</label>
             <textarea
               onChange={handleContentsChange}
@@ -166,7 +192,7 @@ export default function Scoring() {
               className={styles.essayContents}
               value={contents}
             ></textarea>
-            <label>Only accept a maximum of {MAX_WORDS} words.</label>
+            <label className={styles.desc}>Only accept a maximum of {MAX_WORDS} words.</label>
           </div>
         </div>
         <div className={styles.row}>
@@ -177,8 +203,15 @@ export default function Scoring() {
         </div>
       </form>
       { scoreRespone !== '' && <div className={styles.scoreResult}>
-        <label>Score result:</label>
+        <h3>{resultTopic}</h3>
+        {
+          essayType === 1 && resultImage !== '' && <div className={styles.resultImage}><img src={resultImage} alt="Task 1" /></div>
+        }
+        <h3>The content of your writing:</h3>
+        <div className={styles.answerContents} dangerouslySetInnerHTML={{ __html: resultContents.replace(/\n/g, '<br/>') }}></div>
+        <h3>Score result:</h3>
         <div className={styles.innerContent} dangerouslySetInnerHTML={{ __html: scoreRespone }}></div>
+        <div ref={endOfMessagesRef} />
       </div>}
       </div>
     </div>
