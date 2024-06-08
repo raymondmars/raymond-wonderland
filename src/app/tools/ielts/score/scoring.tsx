@@ -205,7 +205,7 @@ export default function Scoring() {
       { scoreRespone !== '' && <div className={styles.scoreResult}>
         <h3>{resultTopic}</h3>
         {
-          essayType === 1 && resultImage !== '' && <div className={styles.resultImage}><img src={resultImage} alt="Task 1" /></div>
+          resultImage !== '' && <div className={styles.resultImage}><img src={resultImage} alt="Task 1" /></div>
         }
         <h3>The content of your writing:</h3>
         <div className={styles.answerContents} dangerouslySetInnerHTML={{ __html: resultContents.replace(/\n/g, '<br/>') }}></div>
