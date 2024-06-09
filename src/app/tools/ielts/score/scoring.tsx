@@ -31,7 +31,7 @@ export default function Scoring() {
   }, [essayType, essayTopic, task1Image, contents])
 
   const scrollToBottom = () => {
-    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "auto" });
   }
 
   useEffect(() => {

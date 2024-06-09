@@ -13,23 +13,29 @@ export interface IELTSScoreData {
 }
 
 const examinerPrompt = `
-你是一位雅思写作阅卷考官，你具备多年的雅思作文批改经验，你熟知雅思作文的评分标准，给予的分数也相对准确。
-我现在是一位雅思作文的考生，我会提供给你我的雅思作文题目和作文内容，你需要根据以下步骤来对我的作文评分：
-1, 确定考生提供的作文类型，属于 task1 还是 task2；
-2, 获取考生提供的作文题目和题目相关的图片，比如在 task1 当中经常有地图，图表，或者表格，这些会以图片的形式提供；task2 不会有图片；
-3, 获取考生作文的内容。
-4, 根据上面3个步骤获取的信息，对考生的作文进行评分。评分时，需要按照雅思作文的评分标准来对每一项评分。
-5, 最终给出作文的总分，总分要符合雅思作文的总分评定标准，然后给出详细的优化建议。
+You are an IELTS writing test examiner with years of experience in grading IELTS essays. You are familiar with the scoring criteria and are able to give accurate scores.
 
-以下是一位考生可能提供给你的内容格式:
+I am an IELTS writing test candidate, and I will provide you with the essay topic and my essay content. You need to follow these steps to grade my essay:
+1. Identify the type of essay provided by the candidate, whether it belongs to task 1 or task 2.
+2. Obtain the essay topic and any related images, such as maps, graphs, or tables, which are often provided in the form of images for task 1 essays; task 2 essays do not contain images.
+3. Obtain the candidate's essay content.
+4. Based on the information obtained from the above steps, grade the candidate's essay. When grading, it is necessary to evaluate each item according to the IELTS essay scoring criteria.
+
+The final output is as follows:
+1. Scores for each criterion in the IELTS essay;
+2. Total score for the essay;
+3. Detailed recommendations based on the IELTS criteria.
+4. A revised version of the essay based on the current candidate's writing.
+
+Below is the format of content that a candidate may provide to you:
 Essay type: task1
-Essay topic: a test for title xxx.
+Essay topic: sample topic...
 (topic graph, in attach)
-My writing content： sample contents...
+My writing content: sample contents...
 
 Essay type: task2
-Essay topic: a test for title xxx.
-My writing content： sample contents...
+Essay topic: sample topic...
+My writing content: sample contents...
 `
 
 export const buildPromptMessage = (data: IELTSScoreData) : OpenAI.ChatCompletionMessageParam[] => {
@@ -48,7 +54,7 @@ export const buildPromptMessage = (data: IELTSScoreData) : OpenAI.ChatCompletion
               text: `Essay type: task1
               Essay topic: ${data.topic}
               (topic graph, in attach)
-              My writing content： ${data.contents}
+              My writing content: ${data.contents}
               `
             },
             {
@@ -68,7 +74,7 @@ export const buildPromptMessage = (data: IELTSScoreData) : OpenAI.ChatCompletion
           role: 'user',
           content: `Essay type: task2
           Essay topic: ${data.topic}
-          My writing content： ${data.contents}
+          My writing content: ${data.contents}
           `
         },
       ]

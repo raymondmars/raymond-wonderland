@@ -67,7 +67,7 @@ export default async function handler(
     const examinerPrompt = buildPromptMessage(data)
     // console.log('examiner prompt ->', examinerPrompt)
     const stream = await openai.chat.completions.create({
-      model: 'gpt-4-vision-preview',
+      model: 'gpt-4o',
       messages: examinerPrompt, //[{role: 'user', content: 'give me a react component sample.'}],
       temperature: 0.8,
       stream: true,
