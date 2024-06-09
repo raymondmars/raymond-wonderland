@@ -29,6 +29,18 @@ export default function RootLayout({
         <div className="maincontainer">
           {children}
         </div>
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=UA-130360843-7`} />
+        <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'UA-130360843-7');
+              `,
+        }}
+        />
       </body>
     </html>
   );
