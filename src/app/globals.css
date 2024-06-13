@@ -4,16 +4,17 @@
   margin: 0;
 }
 
-body {
-  padding: 15px 80px;
+body {  
+  padding: 15px 20px;
   box-sizing: border-box;
   font-size: 1.1em; 
-  font-family: serif, sans-serif, Arial, Helvetica;
+  /* font-family: serif, sans-serif, Arial, Helvetica; */
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 @media screen and (max-width: 768px) {
   body {
-    padding: 15px 20px;
+    padding: 15px 10px;
     font-size: 1em;
   }
   
@@ -27,7 +28,8 @@ h1.title, h2.title {
 
 @media screen and (max-width: 768px) {
   h1.title, h2.title {
-    font-size: 1.6em;
+    font-size: 1.8em;
+    padding: 10px 0px;
   }
 }
 
