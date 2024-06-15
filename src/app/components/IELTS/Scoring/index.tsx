@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import styles from "./scoring.module.css"
+import styles from "./index.module.css"
 import { scoreWritingWithStream } from "@/app/apis/ielts"
 
 export default function Scoring() {
@@ -113,6 +113,16 @@ export default function Scoring() {
     setDisableScoreButton(shouldDisableScoreButton())
   }
 
+  const sendGoogleAnalyticsEvent = (action: string) => {
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'click', {
+        event_category: 'IELTS Writing AI Examiner',
+        event_label: action,
+        value: 1
+      })
+    }
+  }
+
   const handleStartScoreButtonClick = () => {
     if(shouldDisableScoreButton()) {
       return
@@ -132,6 +142,8 @@ export default function Scoring() {
     scrollToBottom()
     const strongPattern = /\*\*(.*?)\*\*/g
     let wholeContents = ''
+
+    sendGoogleAnalyticsEvent('click_start_score')
     scoreWritingWithStream({essayType, topic: essayTopic,  contents, task1Image, onData: (data) => {
       if(data.indexOf('\n') >= 0) {
         data = data.replace(/\n/g, '<br/>')
@@ -145,6 +157,7 @@ export default function Scoring() {
       wholeContents = wholeContents + ' ✓ '
       setScoreRespone(wholeContents)
       clearForm()
+      sendGoogleAnalyticsEvent('score_successed')
     }})
   }
 

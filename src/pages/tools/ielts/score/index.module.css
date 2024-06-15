@@ -1,0 +1,14 @@
+.score {
+  padding: 0px 0px;
+}
+
+.footer {
+  padding: 10px 0px;
+  text-align: center;
+  font-size: 1rem;
+  color:grey;
+  font-weight: 700;
+}
+.footer p {
+  padding: 5px 0px;
+}

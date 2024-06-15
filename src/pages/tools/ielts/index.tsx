@@ -1,6 +1,6 @@
 
 
-export default function Page() {
+export default function Ielts() {
 
   return (
     <div>

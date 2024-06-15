@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react';
-import styles from "./page.module.css";
+import styles from "./index.module.css";
 
-import Timer from '../../../components/Timer';
+import Timer from '../../Timer';
 
-export default function Page() {
+
+export default function WritingExercise() {
   const [count, setCount] = useState<number>(0);
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
