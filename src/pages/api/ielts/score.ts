@@ -2,8 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ServerResponse } from 'http'
 import OpenAI from 'openai'
+import requestIp from 'request-ip'
 
-import { EssayType, IELTSScoreData, buildPromptMessage } from '../../../services/scoreService'
+import { EssayType, IELTSScoreData, buildPromptMessage } from '@/services/scoreService'
+import IpStrategy from '@/services/restrict_strategy/ip'
 
 
 if (!process.env.OPENAI_API_KEY) {
@@ -25,6 +27,18 @@ const validationAuth = (req: NextApiRequest) => {
   //   return false
   // }
   return true
+}
+
+const canContinueScore = async (req: NextApiRequest) => {
+  const detectedIp = requestIp.getClientIp(req)
+  console.log('client ip ->', detectedIp)
+  if(detectedIp === undefined || detectedIp === '') {
+    return false
+  }
+
+  const strategy = new IpStrategy()
+  const result = await strategy.canVisit(detectedIp || "", 'ielts_score')
+  return result
 }
 
 const validationData = (data: IELTSScoreData) => {
@@ -57,6 +71,12 @@ export default async function handler(
       res.status(401).json({ message: 'Unauthorized' })
       return
     }
+
+    if(!(await canContinueScore(req))) {
+      res.status(400).send('Exceed use limit')
+      return
+    }
+
     const data = req.body as IELTSScoreData
     if(!validationData(data)) {
       res.status(400).json({ message: 'Bad Request' })

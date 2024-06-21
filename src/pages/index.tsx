@@ -1,6 +1,5 @@
-import Link from "next/link";
-import styles from "./index.module.css";
-
+import Link from "next/link"
+import styles from "./index.module.css"
 
 export default function Home() {
 
@@ -14,5 +13,5 @@ export default function Home() {
         <p>Welcome to my wonderland, in this place, I will share all of the creative <Link href="/insights">insights</Link> from my daily life.</p>
       </div>
     </main>
-  );
+  )
 }

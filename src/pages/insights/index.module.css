@@ -11,7 +11,12 @@
 .postlist ul li {
   list-style: circle;
   padding: 10px 0px;
-  margin-left: 20px;  
+  margin-left: 20px;
+}
+
+.postlist h3 {
+  font-size: 1.1em;
+  padding: 8px 0px;
 }
 
 .post {
@@ -24,27 +29,35 @@
   .post {
     padding: 0px 5px;
   }
-  
+
 }
 
 .post h1 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   padding: 10px 0px;
+  color: rgb(58, 58, 58);
 }
 
 .post h2 {
-  font-size: 1.3em;
+  font-size: 1.1em;
   padding: 10px 0px;
+  color: rgb(58, 58, 58);
 }
 
 .post h3 {
-  font-size: 1.1em;
+  font-size: 0.9em;
   padding: 10px 0px;
+  color: rgb(58, 58, 58);
 }
 
 .post h4 {
-  font-size: 1em;
+  font-size: 0.8em;
   padding: 10px 0px;
+  color: rgb(58, 58, 58);
+}
+
+.post strong {
+  color: rgb(58, 58, 58);
 }
 
 .post ul {
@@ -60,11 +73,11 @@
 .post ul li {
   list-style: disc;
   padding: 5px 0px;
-  margin-left: 20px;  
+  margin-left: 20px;
 }
 
 .post ol li {
   list-style: disc;
   padding: 5px 0px;
-  margin-left: 20px;  
+  margin-left: 20px;
 }

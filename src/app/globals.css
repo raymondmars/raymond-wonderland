@@ -4,10 +4,10 @@
   margin: 0;
 }
 
-body {  
+body {
   padding: 15px 20px;
   box-sizing: border-box;
-  font-size: 1.1em; 
+  font-size: 1.1em;
   font-family: serif, sans-serif, Arial, Helvetica;
   /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
 }
@@ -17,12 +17,11 @@ body {
     padding: 15px 15px;
     font-size: 1em;
   }
-  
+
 }
 
 h1.title, h2.title {
   color: silver;
-  font-family: 'Courier New', Courier, monospace;
   font-size: 2em;
 }
 

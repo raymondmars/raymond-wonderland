@@ -1,16 +1,22 @@
 import "./globals.css";
 import RootMenu from "./components/RootMenu"
+import { Abril_Fatface, Libre_Franklin } from 'next/font/google'
+
+const libre = Libre_Franklin({ subsets: ['latin']})
+const abril_fatface = Abril_Fatface({ weight: "400", subsets: ["latin-ext"]})
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const homeMenuItems = [
     { title: "Home", link: "/" },
     { title: "Insights", link: "/insights" },
     { title: "Tools", link: "/tools", aliasCollection: ["ielts-writing-ai-examiner"] },
-  ];
+  ]
+
+  const titleStyle = `${abril_fatface.className} title`
 
   return (
-    <div>
-        <h1 className="title">Raymond's Wonderland</h1>
+    <div className={libre.className}>
+        <h1 className={titleStyle}>Raymond's Wonderland</h1>
         <RootMenu menuItems={homeMenuItems} />
         <div className="maincontainer">
           {children}
