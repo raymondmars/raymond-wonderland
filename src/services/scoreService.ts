@@ -24,7 +24,7 @@ I am an IELTS writing test candidate, and I will provide you with the essay topi
 The final output is as follows:
 1. Scores for each criterion in the IELTS essay;
 2. Total score for the essay;
-3. Detailed recommendations based on the IELTS criteria.
+3. Detailed recommendations based on the IELTS criteria;
 4. A revised version of the essay based on the current candidate's writing.
 
 Below is the format of content that a candidate may provide to you:

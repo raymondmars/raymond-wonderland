@@ -17,6 +17,7 @@ const openai = new OpenAI({
 })
 
 if(process.env.OPENAI_PROXY_URL) {
+  console.log('use proxy url ->', process.env.OPENAI_PROXY_URL)
   openai.baseURL = process.env.OPENAI_PROXY_URL
 }
 
